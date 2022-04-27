@@ -22,6 +22,28 @@ function init() {
   renderer.setClearColor(scene.fog.color);
 
   document.body.appendChild(renderer.domElement);
+  let loader = new THREE.TextureLoader();
+  loader.load("smoke-1.png", function (texture) {
+    cloudGeo = new THREE.PlaneBufferGeometry(500, 500);
+    cloudMaterial = new THREE.MeshLambertMaterial({
+      map: texture,
+      transparent: true,
+    });
+
+    for (let p = 0; p < 50; p++) {
+      let cloud = new THREE.Mesh(cloudGeo, cloudMaterial);
+      cloud.position.set(
+        Math.random() * 800 - 400,
+        500,
+        Math.random() * 500 - 500
+      );
+      cloud.rotation.x = 1.16;
+      cloud.rotation.y = -0.12;
+      cloud.rotation.z = Math.random() * 2 * Math.PI;
+      cloud.material.opacity = 0.55;
+      scene.add(cloud);
+    }
+  });
 
   render();
 }
